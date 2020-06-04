@@ -2,6 +2,7 @@ package it.francesco.progetto.entities;
 
 import javax.persistence.*;
 
+//entity commento
 @Entity
 public class Commento {
 
