@@ -4,7 +4,7 @@ import it.francesco.progetto.entities.Prodotto;
 import it.francesco.progetto.servicies.ProdottoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import sun.plugin.perf.PluginRollup;
+
 
 import java.util.List;
 
