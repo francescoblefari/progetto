@@ -4,29 +4,21 @@ import javax.persistence.*;
 
 //entity commento
 @Entity
-public class Commento {
+public class Recensione {
 
     private int id;
-    private String nome;
     private String relazione;
     private Utente utente;
     private Prodotto prodotto;
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public String getRelazione() {

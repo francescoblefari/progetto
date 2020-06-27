@@ -1,15 +1,26 @@
 package it.francesco.progetto.conrollers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import it.francesco.progetto.entities.DettaglioOrdine;
+import it.francesco.progetto.entities.Utente;
+import it.francesco.progetto.repositories.UtenteRepository;
+import it.francesco.progetto.servicies.DettaglioOrdineService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.LinkedList;
+import java.util.List;
 
 @RestController
+@CrossOrigin("http://localhost:4200")
 public class DettaglioOrdineController {
 
-    @GetMapping
-    public String stampa(){return "ciao";}
+    @Autowired
+    private DettaglioOrdineService dettaglioOrdineService;
 
-    @PostMapping
-    public void aggiungi(){ System.out.println("ciao"); }
+    @PostMapping("getDettaglioOrdine")
+    public List<DettaglioOrdine> getAllByIdUtente(@RequestBody String username) {
+        return dettaglioOrdineService.getAllByIdUtente(username);
+    }
+
+
 }

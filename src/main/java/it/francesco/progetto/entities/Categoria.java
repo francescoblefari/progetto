@@ -12,7 +12,8 @@ public class Categoria {
     private String nome;
     private String descrizione;
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
     public int getId() {
         return id;
     }

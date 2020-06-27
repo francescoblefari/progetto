@@ -13,7 +13,11 @@ public class CategoriaService {
     @Autowired
     private CategoriaRepository categoriaRepository;
 
-    public Categoria addCategoria(Categoria categoria){ return categoriaRepository.save(categoria);}
+    public Categoria addCategoria(Categoria categoria) {
+        return categoriaRepository.save(categoria);
+    }
 
-    public List<Categoria> getAllCategoria(){ return categoriaRepository.findAll(); }
+    public List<Categoria> getAllCategoria() {
+        return categoriaRepository.findAll();
+    }
 }

@@ -13,7 +13,11 @@ public class ProdottoService {
     @Autowired
     private ProdottoRepository prodottoRepository;
 
-    public Prodotto addProdotto( Prodotto prodotto ){ return prodottoRepository.save(prodotto);}
+    public Prodotto addProdotto(Prodotto prodotto) {
+        return prodottoRepository.save(prodotto);
+    }
 
-    public List<Prodotto> getAllProdotto(){ return prodottoRepository.findAll();}
+    public List<Prodotto> getAllProdotto() {
+        return prodottoRepository.findAll();
+    }
 }

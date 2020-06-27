@@ -1,34 +1,61 @@
 package it.francesco.progetto.conrollers;
 
+import it.francesco.progetto.entities.Acquisto;
+import it.francesco.progetto.entities.ProdottoInCarrello;
 import it.francesco.progetto.entities.Utente;
-import it.francesco.progetto.servicies.PersonaServicies;
+import it.francesco.progetto.servicies.UtenteServicies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
-
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class PersonaController {
 
     @Autowired
-    private PersonaServicies personaServicies;
+    private UtenteServicies utenteServicies;
 
     @PostMapping("users")
-    public Utente addPerson(@RequestBody Utente utente){
-        return personaServicies.addPersona(utente);
+    public Utente addPerson(@RequestBody Utente utente) {
+        return utenteServicies.addPersona(utente);
+    }
+
+    @PostMapping("usersAll")
+    public void riempiPersona(@RequestBody List<Utente> l) {
+        utenteServicies.addAllPersona(l);
     }
 
     @GetMapping("users")
-    public List<Utente> getAllPersona(){
-        return personaServicies.getAllPersona();
+    public List<Utente> getAllPersona() {
+        return utenteServicies.getAllPersona();
     }
 
     @GetMapping(path = "{id}")
-    public Utente getPersonaById(@PathVariable("id") String id){
-        return personaServicies.getPersonaById(id)
+    public Utente getPersonaById(@PathVariable("id") int id) {
+        return utenteServicies.getPersonaById(id)
                 .orElse(null);
     }
+
+    @GetMapping("lista")
+    public List<ProdottoInCarrello> listato(@RequestParam String username){
+        Utente u = utenteServicies.getPersonaByUsername(username);
+        if(utenteServicies.getPersonaById(1).isPresent())
+            u = utenteServicies.getPersonaById(1).get();
+        return u.getProdottoInCarrello();
+    }
+
+    @GetMapping("listaAcquisti")
+    public List<Acquisto> listaAcquisti(){
+        Utente u = new Utente();
+        if(utenteServicies.getPersonaById(1).isPresent())
+            u = utenteServicies.getPersonaById(1).get();
+        return u.getLista();
+    }
+
+    @PostMapping("login")
+    public Utente login(@RequestBody Utente u){
+        return utenteServicies.getPersonaByUsername(u.getUsername());
+    }
+
 }

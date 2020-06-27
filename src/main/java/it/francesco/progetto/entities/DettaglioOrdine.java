@@ -2,10 +2,9 @@ package it.francesco.progetto.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Entity
-public class DettaglioOrdine implements Serializable{
+public class DettaglioOrdine implements Serializable {
 
     private int id;
     private double prezzo;
@@ -14,6 +13,7 @@ public class DettaglioOrdine implements Serializable{
     private Prodotto prodotto;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
     public int getId() {
         return id;
     }
@@ -56,4 +56,3 @@ public class DettaglioOrdine implements Serializable{
         this.qta = qta;
     }
 }
-

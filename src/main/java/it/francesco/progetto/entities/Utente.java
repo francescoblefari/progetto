@@ -1,6 +1,7 @@
 package it.francesco.progetto.entities;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import java.util.List;
@@ -16,8 +17,10 @@ public class Utente {
     private String password;
     private String email;
     private List<Acquisto> lista;
+    private List<ProdottoInCarrello> prodottoInCarrello;
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
     public int getId() {
         return id;
     }
@@ -42,6 +45,7 @@ public class Utente {
         this.cognome = cognome;
     }
 
+    @Column(unique = true)
     public String getUsername() {
         return username;
     }
@@ -67,11 +71,20 @@ public class Utente {
     }
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "utente")
     public List<Acquisto> getLista() {
         return lista;
     }
 
     public void setLista(List<Acquisto> lista) {
         this.lista = lista;
+    }
+
+    @OneToMany( cascade = CascadeType.ALL, mappedBy = "utente")
+    @JsonIgnore
+    public List<ProdottoInCarrello> getProdottoInCarrello() { return prodottoInCarrello; }
+
+    public void setProdottoInCarrello(List<ProdottoInCarrello> prodottoInCarrello) {
+        this.prodottoInCarrello = prodottoInCarrello;
     }
 }
