@@ -23,7 +23,7 @@ public class ProdottoInCarrelloController {
         return prodottoInCarrelloService.addProdottoInCarrello(p);
     }
 
-    @GetMapping("carrello")
+    @GetMapping("getAllProdottoInCarrello")
     public List<ProdottoInCarrello> getAllProdottiInCarrello() {
         return prodottoInCarrelloService.getAllProdottiInCarrello();
     }
@@ -43,7 +43,6 @@ public class ProdottoInCarrelloController {
 
     @PostMapping("acquista")
     public List<DettaglioOrdine> acquistaCarrello(@RequestBody String username) {
-        System.out.println("sono nel controller");
         return prodottoInCarrelloService.acquistaCarrello(username);
     }
 }

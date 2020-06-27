@@ -28,6 +28,8 @@ public class ProdottoInCarrelloService {
     @Autowired
     private AcquistoRepository acquistoRepository;
 
+
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     public List<ProdottoInCarrello> getAllProdottiInCarrello() {
         return prodottoInCarrelloRepository.findAll();
     }

@@ -31,26 +31,9 @@ public class PersonaController {
         return utenteServicies.getAllPersona();
     }
 
-    @GetMapping(path = "{id}")
-    public Utente getPersonaById(@PathVariable("id") int id) {
-        return utenteServicies.getPersonaById(id)
-                .orElse(null);
-    }
-
-    @GetMapping("lista")
-    public List<ProdottoInCarrello> listato(@RequestParam String username){
-        Utente u = utenteServicies.getPersonaByUsername(username);
-        if(utenteServicies.getPersonaById(1).isPresent())
-            u = utenteServicies.getPersonaById(1).get();
-        return u.getProdottoInCarrello();
-    }
-
-    @GetMapping("listaAcquisti")
-    public List<Acquisto> listaAcquisti(){
-        Utente u = new Utente();
-        if(utenteServicies.getPersonaById(1).isPresent())
-            u = utenteServicies.getPersonaById(1).get();
-        return u.getLista();
+    @PostMapping("listaProdottoInCarrello")
+    public List<ProdottoInCarrello> listato(@RequestBody String username){
+        return utenteServicies.getPersonaByUsername(username).getProdottoInCarrello();
     }
 
     @PostMapping("login")

@@ -33,6 +33,8 @@ public class UtenteServicies {
 
     public Utente getPersonaByUsername(String username){
         Utente u = utenteRepository.findUtenteByUsername(username);
+        System.out.println(u);
+        System.out.println(username);
         if(u==null) return null;
         if(username.equals(u.getUsername()))
             return u;
