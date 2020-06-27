@@ -1,6 +1,5 @@
 package it.francesco.progetto.conrollers;
 
-import it.francesco.progetto.entities.Acquisto;
 import it.francesco.progetto.entities.ProdottoInCarrello;
 import it.francesco.progetto.entities.Utente;
 import it.francesco.progetto.servicies.UtenteServicies;
@@ -33,7 +32,7 @@ public class PersonaController {
 
     @PostMapping("listaProdottoInCarrello")
     public List<ProdottoInCarrello> listato(@RequestBody String username){
-        return utenteServicies.getPersonaByUsername(username).getProdottoInCarrello();
+        return utenteServicies.listaProdottoInCarrelloByUsername(username);
     }
 
     @PostMapping("login")

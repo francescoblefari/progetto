@@ -41,4 +41,8 @@ public class UtenteServicies {
         return null;
     }
 
+    public List<ProdottoInCarrello> listaProdottoInCarrelloByUsername (String username){
+        return utenteRepository.findUtenteByUsername(username).getProdottoInCarrello();
+    }
+
 }
