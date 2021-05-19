@@ -13,9 +13,6 @@ public class Acquisto {
     private int utente;
     private List<DettaglioOrdine> listaDettaglioOrdine = new LinkedList<>();
 
-    public Acquisto() {
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     public int getIdAcquisto() {
@@ -34,7 +31,7 @@ public class Acquisto {
         this.data = data;
     }
 
-    @OneToMany(mappedBy = "acquisto")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "acquisto")
     @JsonIgnore
     public List<DettaglioOrdine> getListaDettaglioOrdine() {
         return listaDettaglioOrdine;
@@ -50,5 +47,15 @@ public class Acquisto {
 
     public void setUtente(int utente) {
         this.utente = utente;
+    }
+
+    @Override
+    public String toString() {
+        return "Acquisto{" +
+                "idAcquisto=" + idAcquisto +
+                ", data=" + data +
+                ", utente=" + utente +
+                ", listaDettaglioOrdine=" + listaDettaglioOrdine +
+                '}';
     }
 }

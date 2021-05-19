@@ -2,7 +2,6 @@ package it.francesco.progetto.entities;
 
 import javax.persistence.*;
 
-//entity commento
 @Entity
 public class Recensione {
 
@@ -38,7 +37,7 @@ public class Recensione {
         this.utente = utente;
     }
 
-    @ManyToOne
+    @OneToOne
     public Prodotto getProdotto() {
         return prodotto;
     }

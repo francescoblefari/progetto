@@ -12,6 +12,8 @@ public class Prodotto {
     private int qta;
     private double prezzo;
     private Categoria categoria;
+    private String img;
+    private long version;
 
     public Prodotto() {
     }
@@ -59,11 +61,29 @@ public class Prodotto {
     }
 
     @OneToOne
+    @JoinColumn(name="CATEGORIA")
     public Categoria getCategoria() {
         return categoria;
     }
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    @Version
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
     }
 }

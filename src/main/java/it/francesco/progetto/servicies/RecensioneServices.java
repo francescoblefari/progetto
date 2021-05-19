@@ -8,7 +8,10 @@ import it.francesco.progetto.repositories.DettaglioOrdineRepository;
 import it.francesco.progetto.repositories.ProdottoRepository;
 import it.francesco.progetto.repositories.RecensioneRepository;
 import it.francesco.progetto.repositories.UtenteRepository;
+import it.francesco.progetto.supports.Invio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,29 +35,33 @@ public class RecensioneServices {
     @Autowired
     private ProdottoRepository prodottoRepository;
 
-    public Recensione addCommento(Recensione recensione) {
-        return recensioneRepository.save(recensione);
+    public ResponseEntity<Recensione> addCommento(Recensione recensione) {
+        return new ResponseEntity<>(recensioneRepository.save(recensione), HttpStatus.OK);
     }
 
-    public List<Recensione> getAllRecensione() {
-        return recensioneRepository.findAll();
+    public ResponseEntity<List<Recensione>> getAllRecensione() {
+        return new ResponseEntity<>(recensioneRepository.findAll(), HttpStatus.OK);
     }
 
-    public List<Recensione> getRecensioneProdotto(Prodotto p){
+    public ResponseEntity<List<Recensione>> getRecensioneProdotto(Prodotto p){
         p = prodottoRepository.findById(p.getId()).get();
-        return recensioneRepository.findByProdotto(p);
+        return new ResponseEntity<>(recensioneRepository.findByProdotto(p), HttpStatus.OK);
     }
 
-    @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public List<Prodotto> getRecensibiliByUtente(String username){
+    /*
+    * dato un utente, visualizza per tutti i prodotti
+    * che ha acquistato quelli che non ha ancora recensito
+    * */
+    @Transactional
+    public ResponseEntity<List<Prodotto>> getRecensibiliByUtente(String username){
         List<Prodotto> recensibili = new LinkedList<>();
         Utente u = utenteRepository.findUtenteByUsername(username);
         List<DettaglioOrdine> listDettaglioOrdine = dettaglioOrdineRepository.findAllByAcquisto_Utente(u.getId());
 
-        List<Recensione> recensiti = recensioneRepository.findByUtenteId(u.getId());
+        List<Recensione> recensioni = recensioneRepository.findByUtenteId(u.getId());
         List<Prodotto> prodottiRecensiti = new LinkedList<>();
 
-        for(Recensione r: recensiti){
+        for(Recensione r: recensioni){
             prodottiRecensiti.add(r.getProdotto());
         }
 
@@ -63,12 +70,14 @@ public class RecensioneServices {
                 recensibili.add(d.getProdotto());
         }
 
-        System.out.println(recensibili);
-        return recensibili;
+        return new ResponseEntity<>(recensibili, HttpStatus.OK);
     }
 
-    @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public void recensisci(String recensione, Prodotto p, String username){
+    @Transactional
+    public void recensisci(Invio invio){
+        Prodotto p = invio.getProdotto();
+        String recensione = invio.getValore();
+        String username = invio.getUsername();
         Utente u = utenteRepository.findUtenteByUsername(username);
         p = prodottoRepository.findById(p.getId()).get();
         List<Recensione> recensioni = recensioneRepository.findAll();
@@ -82,7 +91,6 @@ public class RecensioneServices {
             r.setRelazione(recensione);
             r.setProdotto(p);
             r.setUtente(u);
-            System.out.println(recensione);
             recensioneRepository.save(r);
         }
     }

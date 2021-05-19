@@ -7,6 +7,7 @@ import it.francesco.progetto.entities.Utente;
 import it.francesco.progetto.servicies.UtenteServicies;
 import it.francesco.progetto.servicies.ProdottoInCarrelloService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,31 +19,33 @@ public class ProdottoInCarrelloController {
     @Autowired
     private ProdottoInCarrelloService prodottoInCarrelloService;
 
+    //aggiunge prodottoInCarrello da un ProdottoInCarrello passto dal frontEnd
     @PostMapping("aggiungi")
-    public ProdottoInCarrello addProdottoInCarrello(@RequestBody ProdottoInCarrello p) {
-        return prodottoInCarrelloService.addProdottoInCarrello(p);
+    public void addProdottoInCarrello(@RequestBody ProdottoInCarrello p) {
+        prodottoInCarrelloService.addProdottoInCarrello(p);
     }
 
+    //visualizza tutte le entry per prodottoInCarrello
     @GetMapping("getAllProdottoInCarrello")
-    public List<ProdottoInCarrello> getAllProdottiInCarrello() {
+    public ResponseEntity<List<ProdottoInCarrello>> getAllProdottiInCarrello() {
         return prodottoInCarrelloService.getAllProdottiInCarrello();
     }
 
+    //restituisce la lista dei prodottiInCarrello di un determinato utente
     @PostMapping("carrello")
-    public List<ProdottoInCarrello> getProdottiInCarrelloByUsername( @RequestBody String username ) {
-        List<ProdottoInCarrello> p = prodottoInCarrelloService.getProdottiInCarrelloByUsername(username);
-        System.out.println(p);
-        return p;
+    public ResponseEntity<List<ProdottoInCarrello>> getProdottiInCarrelloByUsername(@RequestBody String username ) {
+        return prodottoInCarrelloService.getProdottiInCarrelloByUsername(username);
     }
 
+    //dato un prodotto in carrello consente di eliminarlo
     @PostMapping("eliminaDaCarrello")
     public void deleteProdottoInCarrello(@RequestBody ProdottoInCarrello p) {
         prodottoInCarrelloService.deleteProdottoInCarrello(p);
-        System.out.println("sono qui");
     }
 
+    //effettua l'ordine di tutti i prodotti presenti nel carrello di un determinato utente
     @PostMapping("acquista")
-    public List<DettaglioOrdine> acquistaCarrello(@RequestBody String username) {
-        return prodottoInCarrelloService.acquistaCarrello(username);
+    public void acquistaCarrello(@RequestBody String username) {
+        prodottoInCarrelloService.acquistaCarrello(username);
     }
 }

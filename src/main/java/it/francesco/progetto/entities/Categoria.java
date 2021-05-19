@@ -1,9 +1,6 @@
 package it.francesco.progetto.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Categoria {
@@ -11,6 +8,7 @@ public class Categoria {
     private int id;
     private String nome;
     private String descrizione;
+    private long version;
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
@@ -36,5 +34,14 @@ public class Categoria {
 
     public void setDescrizione(String descrizione) {
         this.descrizione = descrizione;
+    }
+
+    @Version
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
     }
 }

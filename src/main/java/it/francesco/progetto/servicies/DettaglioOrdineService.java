@@ -5,6 +5,8 @@ import it.francesco.progetto.entities.Utente;
 import it.francesco.progetto.repositories.DettaglioOrdineRepository;
 import it.francesco.progetto.repositories.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,9 +21,14 @@ public class DettaglioOrdineService {
     @Autowired
     private UtenteRepository utenteRepository;
 
-    public List<DettaglioOrdine> getAllByIdUtente(String username) {
+    /*
+    * analogamente avrei potuto lavorare direttamente con gli oggetti dato che in utente mi memorizzo una lista
+    * di acquisti ed in ogni acquisto, memorizzo una lista di dettaglio ordine
+    * */
+    @Transactional
+    public ResponseEntity<List<DettaglioOrdine>> getAllByUsernameUtente(String username) {
         Utente u = utenteRepository.findUtenteByUsername(username);
-        return dettaglioOrdineRepository.findAllByAcquisto_Utente(u.getId());
+        return new ResponseEntity<>(dettaglioOrdineRepository.findAllByAcquisto_Utente(u.getId()), HttpStatus.OK);
     }
 
 

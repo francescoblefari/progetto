@@ -23,6 +23,7 @@ public class DettaglioOrdine implements Serializable {
     }
 
     @ManyToOne
+    @JoinColumn(name="acquisto_id")
     public Acquisto getAcquisto() {
         return acquisto;
     }
@@ -31,7 +32,7 @@ public class DettaglioOrdine implements Serializable {
         this.acquisto = acquisto;
     }
 
-    @ManyToOne
+    @OneToOne
     public Prodotto getProdotto() {
         return prodotto;
     }

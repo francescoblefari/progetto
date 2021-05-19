@@ -6,6 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.persistence.*;
 
 @Entity
+@Table(
+        uniqueConstraints=
+        @UniqueConstraint(columnNames={"UTENTE", "prodotto_id"})
+)
 public class ProdottoInCarrello {
 
     private int id;
@@ -13,6 +17,7 @@ public class ProdottoInCarrello {
     private int qta;
     private Prodotto prodotto;
     private Utente utente;
+    private long version;
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
@@ -50,12 +55,22 @@ public class ProdottoInCarrello {
     }
 
     @ManyToOne
+    @JoinColumn(name = "UTENTE")
     public Utente getUtente() {
         return utente;
     }
 
     public void setUtente(Utente utente) {
         this.utente = utente;
+    }
+
+    @Version
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
     }
 
     @Override
