@@ -1,2 +1,2 @@
 # Progetto
-Progetto esame di piattaforme software web. E-commerce.
+Progetto esame di Sistemi distribuiti. E-commerce.
